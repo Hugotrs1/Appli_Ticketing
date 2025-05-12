@@ -1,0 +1,34 @@
+﻿<Window x:Class="Appli_Ticketing.Views.ReponseAdmin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Background="#1E293B"
+        Width="400" Height="530"
+        WindowStartupLocation="CenterOwner" Title="Réponse Admin">
+
+    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="300" Height="270">
+        <Image Source="/Appli_Ticketing;component/Assets/logo_app.png" Width="55" Height="51" HorizontalAlignment="Center"/>
+        <TextBlock Text="Réponse à la demande" FontSize="24" Foreground="White" FontWeight="Bold" Margin="0 10" HorizontalAlignment="Center"/>
+        <TextBlock Text="Votre réponse :" Foreground="White" Margin="10,0,0,0"/>
+
+        <TextBox x:Name="ResponseTextBox"
+                 Height="67"
+                 AcceptsReturn="True"
+                 TextWrapping="Wrap"
+                 FontSize="14"
+                 Padding="5" 
+                 BorderThickness="1"
+                 Background="White"
+                 Width="280"/>
+
+        <Button Content="Envoyer"
+                Width="120"
+                Height="35"
+                Margin="10,20,0,0"
+                Background="#FF4CAF50"  
+                Foreground="White"
+                BorderBrush="#FF4CAF50"  
+                BorderThickness="1"
+                HorizontalAlignment="Center"
+                Click="OnSendClick"/>
+    </StackPanel>
+</Window>
