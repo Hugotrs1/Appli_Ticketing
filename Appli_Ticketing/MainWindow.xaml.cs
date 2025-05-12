@@ -10,7 +10,7 @@ namespace Appli_Ticketing
         {
             InitializeComponent();
             MainFrame = new System.Windows.Controls.Frame();
-            Content = MainFrame; // Set the frame as the main content of the window
+            Content = MainFrame;
         }
     }
 }

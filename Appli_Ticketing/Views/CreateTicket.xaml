@@ -9,12 +9,12 @@
         <TextBlock Text="Nouveau ticket" FontSize="24" Foreground="White" FontWeight="Bold" Margin="10" HorizontalAlignment="Center"/>
 
         <TextBlock Text="Titre" Foreground="White" Margin="10,0,0,0"/>
-        <TextBox x:Name="TitleBox" Height="30" Width="380"/>
+        <TextBox x:Name="TitleBox" Height="37" Width="380"/>
 
         <TextBlock Text="Description" Foreground="White" Margin="10,10,0,5"/>
         <TextBox x:Name="DescBox" Height="80" TextWrapping="Wrap" AcceptsReturn="True" Width="380"/>
 
-        <TextBlock Text="Type" Foreground="White" Margin="10,10,0,10"/>
+        <TextBlock Text="Type" Foreground="White" Margin="10,0,0,10"/>
         <ComboBox x:Name="TypeCombo" Height="30" Width="380">
             <ComboBoxItem Content="Demandes"/>
             <ComboBoxItem Content="Incident"/>
