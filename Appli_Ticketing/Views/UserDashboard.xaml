@@ -13,19 +13,19 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <DataGrid x:Name="TicketsDataGrid"
+
+            <DataGrid Grid.Row="0"
                       ItemsSource="{Binding Tickets}" 
                       SelectedItem="{Binding SelectedTicket, Mode=TwoWay}"
                       AutoGenerateColumns="False" 
-                      CanUserAddRows="False" 
-                      Height="400" 
-                      Margin="0 0 0 20">        
+                      CanUserAddRows="False"
+                      IsReadOnly="True">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Titre" Binding="{Binding Title}" Width="*" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="*" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Création" Binding="{Binding DateCreation}" Width="*" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Réponse" Binding="{Binding Response}" Width="*" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Titre" Binding="{Binding Title}" Width="*"/>
+                    <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="*"/>
+                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*"/>
+                    <DataGridTextColumn Header="Création" Binding="{Binding DateCreation}" Width="*"/>
+                    <DataGridTextColumn Header="Réponse" Binding="{Binding Response}" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
 

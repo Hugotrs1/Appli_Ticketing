@@ -11,6 +11,7 @@ namespace Appli_Ticketing
         public MainWindow(User user)
         {
             InitializeComponent();
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             WindowState = WindowState.Maximized;
             _currentUser = user;
 
