@@ -10,7 +10,7 @@ namespace Appli_Ticketing.Views
     public partial class LoginPage : Window
     {
         private readonly DatabaseService _db = new();
-        
+
         public LoginPage()
         {
             InitializeComponent();
@@ -43,15 +43,14 @@ namespace Appli_Ticketing.Views
                 return;
             }
 
-            if (Application.Current.MainWindow is MainWindow wnd)
-            {
-                if (user.IsAdmin)
-                    wnd.MainFrame.Navigate(new AdminDashboard());
-                else
-                    wnd.MainFrame.Navigate(new UserDashboard(user.Id));
+            OnLoginSuccess(user);
+        }
 
-                this.Close();
-            }
+        private void OnLoginSuccess(User user)
+        {
+            var mainWindow = new MainWindow(user);
+            mainWindow.Show();
+            this.Close();
         }
 
         private void OnRegisterClick(object sender, RoutedEventArgs e)

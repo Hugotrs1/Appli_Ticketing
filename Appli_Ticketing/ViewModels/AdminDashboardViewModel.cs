@@ -34,18 +34,23 @@ namespace Appli_Ticketing.ViewModels
                 OnPropertyChanged(nameof(SelectedTicket));
                 ((RelayCommand)RespondCommand).NotifyCanExecuteChanged();
                 ((RelayCommand)SetOnHoldCommand).NotifyCanExecuteChanged();
+                ((RelayCommand)DeleteCommand).NotifyCanExecuteChanged();
+                ((RelayCommand)LogoutCommand).NotifyCanExecuteChanged();
             }
         }
 
         public ICommand RespondCommand { get; }
         public ICommand SetOnHoldCommand { get; }
-
+        public ICommand DeleteCommand { get; }
+        public ICommand LogoutCommand { get; }
 
         public AdminDashboardViewModel()
         {
             LoadTickets();
             RespondCommand = new RelayCommand(Respond, () => SelectedTicket != null);
             SetOnHoldCommand = new RelayCommand(SetOnHold, () => SelectedTicket != null);
+            DeleteCommand = new RelayCommand(Delete, () => SelectedTicket != null);
+            LogoutCommand = new RelayCommand(Logout);
         }
 
         private void LoadTickets()
@@ -67,13 +72,40 @@ namespace Appli_Ticketing.ViewModels
                 UpdateDb("Response = @r, Status = 'En attente'", new { r = SelectedTicket.Response });
                 LoadTickets();
             }
-
         }
+
         private void SetOnHold()
         {
-            SelectedTicket.Status = "En attente";
-            UpdateDb("Status = 'En attente'", null);
-            LoadTickets();
+            if (SelectedTicket.Status != "Validé")
+            {
+                SelectedTicket.Status = "En attente";
+                UpdateDb("Status = 'En attente'", null);
+                LoadTickets();
+            }
+            else
+            {
+                MessageBox.Show("Vous ne pouvez pas mettre un ticket validé en attente.", "Action interdite", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void Delete()
+        {
+            if (SelectedTicket.Status == "Validé")
+            {
+                MessageBox.Show("Impossible de supprimer un ticket validé. Il doit rester dans l'historique.", "Suppression refusée", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var result = MessageBox.Show($"Voulez-vous vraiment supprimer le ticket '{SelectedTicket.Title}' ?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                using var conn = new SqlConnection(
+                    "Data Source=PC-HUGO\\mssqlserver01;Initial Catalog=Appli_Ticketing;Integrated Security=True;Encrypt=False");
+                conn.Open();
+                conn.Execute("DELETE FROM Tickets WHERE Id = @Id", new { Id = SelectedTicket.Id });
+
+                LoadTickets();
+            }
         }
 
         private void UpdateDb(string setClause, object param)
@@ -85,6 +117,21 @@ namespace Appli_Ticketing.ViewModels
                 param is null
                     ? new { Id = SelectedTicket.Id }
                     : new { Id = SelectedTicket.Id, ((dynamic)param).r });
+        }
+
+        private void Logout()
+        {
+            var loginPage = new LoginPage();
+            loginPage.Show();
+
+            foreach (Window window in Application.Current.Windows)
+            {
+                if (window is MainWindow)
+                {
+                    window.Close();
+                    break;
+                }
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

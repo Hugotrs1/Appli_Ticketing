@@ -9,11 +9,8 @@ namespace Appli_Ticketing
         {
             base.OnStartup(e);
 
-            var mainWindow = new MainWindow();
-            mainWindow.Show();
-
             var loginWindow = new LoginPage();
-            loginWindow.ShowDialog();
+            loginWindow.Show();
         }
     }
 }

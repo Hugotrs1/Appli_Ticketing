@@ -5,7 +5,7 @@
 
         <!-- Style global des boutons -->
         <Style TargetType="Button">
-            <Setter Property="Background" Value="#FF3B82F6"/>
+            <Setter Property="Background" Value="#026616"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Padding" Value="10,5"/>
@@ -21,7 +21,7 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#FF2563EB"/>
+                                <Setter Property="Background" Value="#026616"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -31,7 +31,7 @@
         <Style TargetType="TextBox">
             <Setter Property="Margin" Value="5"/>
             <Setter Property="Padding" Value="8"/>
-            <Setter Property="BorderBrush" Value="#FF3B82F6"/>
+            <Setter Property="BorderBrush" Value="#026616"/>
             <Setter Property="BorderThickness" Value="1.5"/>
             <Setter Property="FontSize" Value="14"/>
         </Style>
@@ -56,7 +56,7 @@
         </Style>
 
         <Style TargetType="DataGridColumnHeader">
-            <Setter Property="Background" Value="#FF3B82F6"/>
+            <Setter Property="Background" Value="#026616"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Padding" Value="10,5"/>

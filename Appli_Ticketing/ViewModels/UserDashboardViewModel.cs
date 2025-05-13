@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Dapper;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Threading;
 
 public partial class UserDashboardViewModel : BaseViewModel
@@ -12,6 +13,13 @@ public partial class UserDashboardViewModel : BaseViewModel
     private readonly int _userId;
 
     [ObservableProperty] private ObservableCollection<Ticket> tickets;
+    [ObservableProperty] private Ticket selectedTicket;
+
+    public RelayCommand DeleteTicketCommand { get; }
+    public RelayCommand ValidateTicketCommand { get; }
+
+    public bool CanDeleteTicket => SelectedTicket != null && string.IsNullOrEmpty(SelectedTicket.Response);
+    public bool CanValidateTicket => SelectedTicket != null && !string.IsNullOrEmpty(SelectedTicket.Response);
 
     public UserDashboardViewModel(int userId)
     {
@@ -19,9 +27,20 @@ public partial class UserDashboardViewModel : BaseViewModel
         _userId = userId;
         LoadTickets();
 
+        DeleteTicketCommand = new RelayCommand(DeleteTicket, () => CanDeleteTicket);
+        ValidateTicketCommand = new RelayCommand(ValidateTicket, () => CanValidateTicket);
+
         _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(30) };
         _timer.Tick += CheckTicketTimeouts;
         _timer.Start();
+    }
+
+    partial void OnSelectedTicketChanged(Ticket value)
+    {
+        OnPropertyChanged(nameof(CanDeleteTicket));
+        OnPropertyChanged(nameof(CanValidateTicket));
+        DeleteTicketCommand.NotifyCanExecuteChanged();
+        ValidateTicketCommand.NotifyCanExecuteChanged();
     }
 
     private void LoadTickets()
@@ -30,6 +49,42 @@ public partial class UserDashboardViewModel : BaseViewModel
         conn.Open();
         var result = conn.Query<Ticket>("SELECT * FROM Tickets WHERE UserId = @UserId", new { UserId = _userId });
         Tickets = new ObservableCollection<Ticket>(result);
+    }
+
+    private void DeleteTicket()
+    {
+        if (SelectedTicket == null) return;
+
+        var result = MessageBox.Show(
+            $"Voulez-vous vraiment supprimer le ticket \"{SelectedTicket.Title}\" ?",
+            "Confirmation de suppression",
+            MessageBoxButton.YesNo,
+            MessageBoxImage.Warning);
+
+        if (result != MessageBoxResult.Yes) return;
+
+        using var conn = _db.GetConnection();
+        conn.Open();
+        conn.Execute("DELETE FROM Tickets WHERE Id = @Id", new { Id = SelectedTicket.Id });
+        ReloadTickets();
+    }
+
+    private void ValidateTicket()
+    {
+        if (SelectedTicket == null) return;
+
+        var result = MessageBox.Show(
+            $"Voulez-vous valider le ticket \"{SelectedTicket.Title}\" ?",
+            "Confirmation de validation",
+            MessageBoxButton.YesNo,
+            MessageBoxImage.Question);
+
+        if (result != MessageBoxResult.Yes) return;
+
+        using var conn = _db.GetConnection();
+        conn.Open();
+        conn.Execute("UPDATE Tickets SET Status = 'Validé' WHERE Id = @Id", new { Id = SelectedTicket.Id });
+        ReloadTickets();
     }
 
     private void CheckTicketTimeouts(object sender, EventArgs e)
@@ -41,19 +96,12 @@ public partial class UserDashboardViewModel : BaseViewModel
         {
             if ((DateTime.Now - ticket.DateCreation).TotalMinutes > 10)
             {
-                conn.Execute("UPDATE Tickets SET Status = 'Expired' WHERE Id = @Id", new { ticket.Id });
+                conn.Execute("UPDATE Tickets SET Status = 'Expiré' WHERE Id = @Id", new { ticket.Id });
             }
         }
+        ReloadTickets();
     }
 
-    [RelayCommand]
-    private void DeleteTicket(Ticket ticket)
-    {
-        using var conn = _db.GetConnection();
-        conn.Open();
-        conn.Execute("DELETE FROM Tickets WHERE Id = @Id", new { ticket.Id });
-        LoadTickets();
-    }
     public void ReloadTickets()
     {
         LoadTickets();

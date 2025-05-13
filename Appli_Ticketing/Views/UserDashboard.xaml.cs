@@ -22,5 +22,19 @@ namespace Appli_Ticketing.Views
             var viewModel = DataContext as UserDashboardViewModel;
             viewModel?.ReloadTickets();
         }
-    }   
+        private void OnLogoutClick(object sender, RoutedEventArgs e)
+        {
+            var loginPage = new LoginPage();
+            loginPage.Show();
+
+            foreach (Window window in Application.Current.Windows)
+            {
+                if (window is MainWindow)
+                {
+                    window.Close();
+                    break;
+                }
+            }
+        }
+    }
 }
