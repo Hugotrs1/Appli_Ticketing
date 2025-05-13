@@ -2,7 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using Dapper;
 
-public partial class RegisterViewModel : BaseViewModel
+public partial class RegisterViewModel : ObservableObject
 {
     private readonly DatabaseService _db;
 

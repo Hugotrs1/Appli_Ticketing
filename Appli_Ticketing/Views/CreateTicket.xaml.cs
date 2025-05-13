@@ -5,7 +5,7 @@ using Dapper;
 
 namespace Appli_Ticketing.Views
 {
-    public partial class CreateTicket : Page
+    public partial class CreateTicket : Window
     {
         private readonly int _userId;
         private readonly DatabaseService _db = new();
@@ -51,13 +51,12 @@ namespace Appli_Ticketing.Views
             MessageBox.Show("Ticket créé !", "Succès",
                             MessageBoxButton.OK, MessageBoxImage.Information);
 
-            // Retour au dashboard
-            this.NavigationService?.Navigate(new UserDashboard(_userId));
+            this.Close();
         }
 
         private void OnCancelClick(object sender, RoutedEventArgs e)
         {
-            this.NavigationService?.Navigate(new UserDashboard(_userId));
+            this.Close();
         }
     }
 }

@@ -32,7 +32,6 @@ public partial class LoginViewModel : ObservableObject
         var user = Authenticate();
         if (user != null)
         {
-            // Connecter l'utilisateur (ajoute ta logique ici)
         }
         else
         {
@@ -46,11 +45,9 @@ public partial class LoginViewModel : ObservableObject
         conn.Open();
         var user = conn.QueryFirstOrDefault<User>(
             "SELECT * FROM Users WHERE Username = @Username AND Password = @Password",
-            new { Username = username, Password = password }); // Utilisation des propriétés privées
+            new { Username = username, Password = password });
         return user;
     }
-
-    // Logique pour rediriger vers la page d'inscription
     private void RedirectToRegisterPage()
     {
         var mainWindow = Application.Current.MainWindow as MainWindow;

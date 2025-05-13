@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace Appli_Ticketing.Views
 {
@@ -13,9 +14,13 @@ namespace Appli_Ticketing.Views
             DataContext = new UserDashboardViewModel(_userId);
         }
 
-        private void OnCreateTicketClick(object sender, System.Windows.RoutedEventArgs e)
+        private void OnCreateTicketClick(object sender, RoutedEventArgs e)
         {
-            this.NavigationService?.Navigate(new CreateTicket(_userId));
+            var createTicketWindow = new CreateTicket(_userId);
+            createTicketWindow.ShowDialog();
+
+            var viewModel = DataContext as UserDashboardViewModel;
+            viewModel?.ReloadTickets();
         }
-    }
+    }   
 }

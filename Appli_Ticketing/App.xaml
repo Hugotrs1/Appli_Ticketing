@@ -1,7 +1,6 @@
 ﻿<Application x:Class="Appli_Ticketing.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="Views/LoginPage.xaml">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Application.Resources>
 
         <!-- Style global des boutons -->

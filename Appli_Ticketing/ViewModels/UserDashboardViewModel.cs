@@ -54,4 +54,8 @@ public partial class UserDashboardViewModel : BaseViewModel
         conn.Execute("DELETE FROM Tickets WHERE Id = @Id", new { ticket.Id });
         LoadTickets();
     }
+    public void ReloadTickets()
+    {
+        LoadTickets();
+    }
 }

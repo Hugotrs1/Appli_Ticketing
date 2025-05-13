@@ -34,13 +34,11 @@ namespace Appli_Ticketing.ViewModels
                 OnPropertyChanged(nameof(SelectedTicket));
                 ((RelayCommand)RespondCommand).NotifyCanExecuteChanged();
                 ((RelayCommand)SetOnHoldCommand).NotifyCanExecuteChanged();
-                ((RelayCommand)ValidateCommand).NotifyCanExecuteChanged();
             }
         }
 
         public ICommand RespondCommand { get; }
         public ICommand SetOnHoldCommand { get; }
-        public ICommand ValidateCommand { get; }
 
 
         public AdminDashboardViewModel()
@@ -48,7 +46,6 @@ namespace Appli_Ticketing.ViewModels
             LoadTickets();
             RespondCommand = new RelayCommand(Respond, () => SelectedTicket != null);
             SetOnHoldCommand = new RelayCommand(SetOnHold, () => SelectedTicket != null);
-            ValidateCommand = new RelayCommand(Validate, () => SelectedTicket != null);
         }
 
         private void LoadTickets()
@@ -67,7 +64,7 @@ namespace Appli_Ticketing.ViewModels
             if (window.ShowDialog() == true && !string.IsNullOrWhiteSpace(window.ResponseText))
             {
                 SelectedTicket.Response = window.ResponseText;
-                UpdateDb("Response = @r, Status = 'Closed'", new { r = SelectedTicket.Response });
+                UpdateDb("Response = @r, Status = 'En attente'", new { r = SelectedTicket.Response });
                 LoadTickets();
             }
 
@@ -76,13 +73,6 @@ namespace Appli_Ticketing.ViewModels
         {
             SelectedTicket.Status = "En attente";
             UpdateDb("Status = 'En attente'", null);
-            LoadTickets();
-        }
-
-        private void Validate()
-        {
-            SelectedTicket.Status = "Validé";
-            UpdateDb("Status = 'Validé'", null);
             LoadTickets();
         }
 

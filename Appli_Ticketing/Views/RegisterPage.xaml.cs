@@ -5,7 +5,7 @@ using Dapper;
 
 namespace Appli_Ticketing.Views
 {
-    public partial class RegisterPage : Page
+    public partial class RegisterPage : Window
     {
         public RegisterPage()
         {
@@ -36,12 +36,12 @@ namespace Appli_Ticketing.Views
                          new { Username = user, Password = pass });
 
             MessageBox.Show("Inscription réussie !", "OK", MessageBoxButton.OK, MessageBoxImage.Information);
-            this.NavigationService?.Navigate(new LoginPage());
+            this.Close();
         }
 
         private void OnBack(object sender, RoutedEventArgs e)
         {
-            this.NavigationService?.GoBack();
+            this.Close();
         }
     }
 }

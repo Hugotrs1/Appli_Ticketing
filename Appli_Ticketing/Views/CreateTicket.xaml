@@ -1,7 +1,7 @@
-﻿<Page x:Class="Appli_Ticketing.Views.CreateTicket"
+﻿<Window x:Class="Appli_Ticketing.Views.CreateTicket"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      Background="#1E293B"
+      Background="#043123"
       Width="500" Height="600">
 
     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="400" Height="400">
@@ -25,4 +25,4 @@
             <Button Content="Annuler" Width="120" Height="25" Click="OnCancelClick" Margin="10,0,0,0"/>
         </StackPanel>
     </StackPanel>
-</Page>
+</Window>
