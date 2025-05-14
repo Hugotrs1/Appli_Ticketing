@@ -1,9 +1,15 @@
 ﻿<Page x:Class="Appli_Ticketing.Views.UserDashboard"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:vm="clr-namespace:Appli_Ticketing.Views"
+      xmlns:conv="clr-namespace:Appli_Ticketing.Converter"
       Background="#043123">
+    <Page.Resources>
+        <conv:CriticiteConverter x:Key="CriticiteConverter"/>
+        <conv:DateTimeConverter x:Key="DateTimeConverter"/>
+    </Page.Resources>
 
-    <Grid>
+        <Grid>
         <Image Source="/Assets/backgroundfull.jpg"
                Stretch="Fill"
                Panel.ZIndex="0"
@@ -29,11 +35,19 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Titre" Binding="{Binding Title}" Width="*"/>
                     <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="*"/>
+                    <DataGridTextColumn Header="Problème" Binding="{Binding ProblemName}" Width="*"/>
                     <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*"/>
                     <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*"/>
-                    <DataGridTextColumn Header="Création" Binding="{Binding DateCreation}" Width="*"/>
-                    <DataGridTextColumn Header="Réponse" Binding="{Binding Response}" Width="*"/>
-                </DataGrid.Columns>
+                        <DataGridTextColumn Header="Date de création" Binding="{Binding DateCreation, Converter={StaticResource DateTimeConverter}}" Width="*"/>
+                        <DataGridTextColumn Header="Réponse" Binding="{Binding Response}" Width="*"/>
+                        <DataGridTemplateColumn Header="Criticité">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Ellipse Width="20" Height="20" Fill="{Binding ProblemCriticite, Converter={StaticResource CriticiteConverter}}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
             </DataGrid>
 
             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">

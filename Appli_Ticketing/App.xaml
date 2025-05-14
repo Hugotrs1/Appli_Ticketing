@@ -62,7 +62,7 @@
             <Setter Property="Background" Value="#4B6F5F"/>
             <Setter Property="Foreground" Value="white"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Padding" Value="0"/>
             <Setter Property="BorderThickness" Value="1"/>
         </Style>
 

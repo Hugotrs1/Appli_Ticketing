@@ -62,11 +62,15 @@ namespace Appli_Ticketing.ViewModels
                 "Data Source=PC-HUGO\\mssqlserver01;Initial Catalog=Appli_Ticketing;Integrated Security=True;Encrypt=False");
             conn.Open();
             var list = conn.Query<Ticket>(
-                @"SELECT t.*, u.Username AS UserName 
-                  FROM Tickets t
-                  INNER JOIN Users u ON t.UserId = u.Id").ToList();
+                @"SELECT t.*, u.Username AS UserName, p.Nom AS ProblemName, p.Criticite AS ProblemCriticite 
+          FROM Tickets t
+          INNER JOIN Users u ON t.UserId = u.Id
+          LEFT JOIN Problemes p ON t.ProblemeId = p.Id").ToList();
+
             Tickets = new ObservableCollection<Ticket>(list);
         }
+
+
 
         private void Respond()
         {
@@ -122,7 +126,6 @@ namespace Appli_Ticketing.ViewModels
             };
             window.ShowDialog();
         }
-
 
         private void UpdateDb(string setClause, object param)
         {

@@ -4,16 +4,14 @@
       WindowStartupLocation="CenterScreen"
       Background="#043123"
       WindowStyle="None"
-      Width="400" Height="480">
-
-
+      Width="400" Height="550">
     <Grid>
         <Image Source="/Appli_Ticketing;component/Assets/background.jpg"
                Stretch="Fill"
                Panel.ZIndex="0"
                Opacity="0.8"/>
 
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="350" Height="440" Panel.ZIndex="1">
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="350" Height="540" Panel.ZIndex="1">
 
             <Image Source="/Appli_Ticketing;component/Assets/logo_app.png"
                    Width="100" Height="100"
@@ -42,16 +40,26 @@
                        Margin="5,10,0,10"/>
             
             <ComboBox x:Name="TypeCombo" Height="30" Width="340">
-                
                 <ComboBoxItem Content="Incident"/>
                 <ComboBoxItem Content="Demande"/>
             </ComboBox>
+
+            <TextBlock Text="Problème :" 
+                       FontSize="14" 
+                       FontWeight="Bold" 
+                       Foreground="#D3C29C"
+                       Margin="5,10,0,10"/>
+
+            <ComboBox x:Name="ProblemeCombo" 
+                      Height="30" 
+                      Width="340"
+                      DisplayMemberPath="Nom"/>
 
             <StackPanel Grid.Row="1" 
                         Orientation="Horizontal" 
                         HorizontalAlignment="Center" 
                         Margin="0,20,0,0">
-                
+
                 <Button Content="Valider" Width="120" Height="30" Click="OnSubmitClick" Margin="10,0,5,0"/>
                 <Button Content="Annuler" Width="120" Height="30" Click="OnCancelClick" Margin="10,0,0,0"/>
             </StackPanel>

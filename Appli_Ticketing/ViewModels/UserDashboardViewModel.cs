@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Dapper;
 using System.Collections.ObjectModel;
+using System.Data.SqlClient;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -50,10 +51,16 @@ public partial class UserDashboardViewModel : BaseViewModel
 
     private void LoadTickets()
     {
-        using var conn = _db.GetConnection();
+        using var conn = new SqlConnection(
+            "Data Source=PC-HUGO\\mssqlserver01;Initial Catalog=Appli_Ticketing;Integrated Security=True;Encrypt=False");
         conn.Open();
-        var result = conn.Query<Ticket>("SELECT * FROM Tickets WHERE UserId = @UserId", new { UserId = _userId });
-        Tickets = new ObservableCollection<Ticket>(result);
+        var list = conn.Query<Ticket>(
+            @"SELECT t.*, u.Username AS UserName, p.Nom AS ProblemName, p.Criticite AS ProblemCriticite 
+          FROM Tickets t
+          INNER JOIN Users u ON t.UserId = u.Id
+          LEFT JOIN Problemes p ON t.ProblemeId = p.Id").ToList();
+
+        Tickets = new ObservableCollection<Ticket>(list);
     }
 
     private void ShowDetails()
