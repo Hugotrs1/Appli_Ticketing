@@ -36,6 +36,7 @@ namespace Appli_Ticketing.ViewModels
                 ((RelayCommand)SetOnHoldCommand).NotifyCanExecuteChanged();
                 ((RelayCommand)DeleteCommand).NotifyCanExecuteChanged();
                 ((RelayCommand)LogoutCommand).NotifyCanExecuteChanged();
+                ((RelayCommand)DetailCommand).NotifyCanExecuteChanged();
             }
         }
 
@@ -43,6 +44,7 @@ namespace Appli_Ticketing.ViewModels
         public ICommand SetOnHoldCommand { get; }
         public ICommand DeleteCommand { get; }
         public ICommand LogoutCommand { get; }
+        public ICommand DetailCommand { get; }
 
         public AdminDashboardViewModel()
         {
@@ -51,6 +53,7 @@ namespace Appli_Ticketing.ViewModels
             SetOnHoldCommand = new RelayCommand(SetOnHold, () => SelectedTicket != null);
             DeleteCommand = new RelayCommand(Delete, () => SelectedTicket != null);
             LogoutCommand = new RelayCommand(Logout);
+            DetailCommand = new RelayCommand(ShowDetails, () => SelectedTicket != null);
         }
 
         private void LoadTickets()
@@ -58,7 +61,10 @@ namespace Appli_Ticketing.ViewModels
             using var conn = new SqlConnection(
                 "Data Source=PC-HUGO\\mssqlserver01;Initial Catalog=Appli_Ticketing;Integrated Security=True;Encrypt=False");
             conn.Open();
-            var list = conn.Query<Ticket>("SELECT * FROM Tickets").ToList();
+            var list = conn.Query<Ticket>(
+                @"SELECT t.*, u.Username AS UserName 
+                  FROM Tickets t
+                  INNER JOIN Users u ON t.UserId = u.Id").ToList();
             Tickets = new ObservableCollection<Ticket>(list);
         }
 
@@ -107,6 +113,16 @@ namespace Appli_Ticketing.ViewModels
                 LoadTickets();
             }
         }
+
+        private void ShowDetails()
+        {
+            var window = new DetailTicket(SelectedTicket)
+            {
+                Owner = Application.Current.MainWindow
+            };
+            window.ShowDialog();
+        }
+
 
         private void UpdateDb(string setClause, object param)
         {

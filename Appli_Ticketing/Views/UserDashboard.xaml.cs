@@ -11,8 +11,10 @@ namespace Appli_Ticketing.Views
         {
             InitializeComponent();
             _userId = userId;
-            DataContext = new UserDashboardViewModel(_userId);
+            var viewModel = new UserDashboardViewModel(_userId);
+            DataContext = viewModel;
         }
+
 
         private void OnCreateTicketClick(object sender, RoutedEventArgs e)
         {

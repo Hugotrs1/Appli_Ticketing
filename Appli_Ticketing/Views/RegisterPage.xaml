@@ -5,19 +5,35 @@
       Background="#043123"
       Width="350" Height="500">
 
-    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="320" Height="430">
-        <Image Source="/Appli_Ticketing;component/Assets/logo_app.png" Width="150" Height="150" HorizontalAlignment="Center"/>
-        <TextBlock Text="Inscription" FontSize="24" Foreground="White" FontWeight="Bold" Margin="10" HorizontalAlignment="Center"/>
+    <Grid>
+        <Image Source="/Appli_Ticketing;component/Assets/background.jpg"
+               Stretch="Fill"
+               Panel.ZIndex="0"
+               Opacity="0.8"/>
 
-        <TextBlock Text="Nom d’utilisateur :" Foreground="White"  Margin="10,10,0,10"/>
-        <TextBox x:Name="UsernameTextBox" Height="37" Width="300"/>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="320" Height="470" Panel.ZIndex="1">
+            
+            <Image Source="/Appli_Ticketing;component/Assets/logo_app.png" 
+                   Width="150" Height="150"
+                   HorizontalAlignment="Center"/>
+            
+            <TextBlock Text="Inscription" 
+                       FontSize="21" 
+                       Foreground="#D3C29C" 
+                       FontWeight="Bold" 
+                       Margin="0,20,0,20" 
+                       HorizontalAlignment="Center"/>
 
-        <TextBlock Text="Mot de passe :" Foreground="White" Margin="10,10,0,10"/>
-        <PasswordBox x:Name="PasswordBox" Height="37" Width="300"/>
+            <TextBlock Text="Nom d’utilisateur :" Foreground="#D3C29C" Margin="10,10,0,5" FontSize="14"/>
+            <TextBox x:Name="UsernameTextBox" Height="37" Width="300"/>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,0">
-            <Button Content="S'inscrire" Width="120" Height="30" Click="OnRegisterConfirm" Margin="0,20,5,0"/>
-            <Button Content="Retour" Width="120" Height="30" Click="OnBack" Margin="5,20,0,0"/>
+            <TextBlock Text="Mot de passe :" Foreground="#D3C29C" Margin="10,5,0,5" FontSize="14"/>
+            <PasswordBox x:Name="PasswordBox" Height="37" Width="300"/>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,0">
+                <Button Content="S'inscrire" Width="120" Height="30" Click="OnRegisterConfirm" Margin="0,20,5,0"/>
+                <Button Content="Retour" Width="120" Height="30" Click="OnBack" Margin="5,20,0,0"/>
+            </StackPanel>
         </StackPanel>
-    </StackPanel>
+    </Grid>
 </Window>

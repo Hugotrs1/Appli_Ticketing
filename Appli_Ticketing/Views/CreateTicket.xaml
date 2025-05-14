@@ -17,8 +17,8 @@
 
         <TextBlock Text="Type" Foreground="White" Margin="10,0,0,10"/>
         <ComboBox x:Name="TypeCombo" Height="30" Width="380">
-            <ComboBoxItem Content="Demandes"/>
             <ComboBoxItem Content="Incident"/>
+            <ComboBoxItem Content="Demande"/>
         </ComboBox>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">

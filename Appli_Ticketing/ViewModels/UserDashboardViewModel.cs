@@ -1,4 +1,5 @@
 ﻿using Appli_Ticketing.Models;
+using Appli_Ticketing.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Dapper;
@@ -17,6 +18,8 @@ public partial class UserDashboardViewModel : BaseViewModel
 
     public RelayCommand DeleteTicketCommand { get; }
     public RelayCommand ValidateTicketCommand { get; }
+    public RelayCommand DetailCommand { get; }
+
 
     public bool CanDeleteTicket => SelectedTicket != null && string.IsNullOrEmpty(SelectedTicket.Response);
     public bool CanValidateTicket => SelectedTicket != null && !string.IsNullOrEmpty(SelectedTicket.Response);
@@ -29,6 +32,7 @@ public partial class UserDashboardViewModel : BaseViewModel
 
         DeleteTicketCommand = new RelayCommand(DeleteTicket, () => CanDeleteTicket);
         ValidateTicketCommand = new RelayCommand(ValidateTicket, () => CanValidateTicket);
+        DetailCommand = new RelayCommand(ShowDetails, () => SelectedTicket != null);
 
         _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(30) };
         _timer.Tick += CheckTicketTimeouts;
@@ -39,6 +43,7 @@ public partial class UserDashboardViewModel : BaseViewModel
     {
         OnPropertyChanged(nameof(CanDeleteTicket));
         OnPropertyChanged(nameof(CanValidateTicket));
+        DetailCommand.NotifyCanExecuteChanged();
         DeleteTicketCommand.NotifyCanExecuteChanged();
         ValidateTicketCommand.NotifyCanExecuteChanged();
     }
@@ -50,6 +55,22 @@ public partial class UserDashboardViewModel : BaseViewModel
         var result = conn.Query<Ticket>("SELECT * FROM Tickets WHERE UserId = @UserId", new { UserId = _userId });
         Tickets = new ObservableCollection<Ticket>(result);
     }
+
+    private void ShowDetails()
+    {
+        if (SelectedTicket == null)
+        {
+            MessageBox.Show("Aucun ticket sélectionné.");
+            return;
+        }
+
+        var window = new DetailTicket(SelectedTicket)
+        {
+            Owner = Application.Current.MainWindow
+        };
+        window.ShowDialog();
+    }
+
 
     private void DeleteTicket()
     {

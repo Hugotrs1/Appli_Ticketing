@@ -3,14 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Application.Resources>
 
-        <!-- Style global des boutons -->
         <Style TargetType="Button">
-            <Setter Property="Background" Value="#026616"/>
+            <Setter Property="Background" Value="#1E3A2D"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Padding" Value="10,5"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Opacity" Value="0.8"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -21,7 +21,7 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#026616"/>
+                                <Setter Property="Background" Value="#4B6F5F"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -31,8 +31,9 @@
         <Style TargetType="TextBox">
             <Setter Property="Margin" Value="5"/>
             <Setter Property="Padding" Value="8"/>
-            <Setter Property="BorderBrush" Value="#026616"/>
+            <Setter Property="BorderBrush" Value="#D1B178"/>
             <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="14"/>
         </Style>
 
@@ -49,18 +50,20 @@
         </Style>
 
         <Style TargetType="PasswordBox">
-            <Setter Property="Height" Value="35"/>
-            <Setter Property="Width" Value="280"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="BorderBrush" Value="#D1B178"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Padding" Value="5,0"/>
+            <Setter Property="FontSize" Value="14"/>
         </Style>
 
         <Style TargetType="DataGridColumnHeader">
-            <Setter Property="Background" Value="#026616"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#4B6F5F"/>
+            <Setter Property="Foreground" Value="white"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Padding" Value="10,5"/>
-            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderThickness" Value="1"/>
         </Style>
 
     </Application.Resources>
