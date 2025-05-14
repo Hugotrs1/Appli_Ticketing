@@ -38,7 +38,7 @@ namespace Appli_Ticketing.Views
               @"INSERT INTO Tickets 
                  (Title, Description, Type, DateCreation, Status, UserId) 
                 VALUES 
-                 (@t, @d, @ty, @dt, 'Open', @u)",
+                 (@t, @d, @ty, @dt, 'Ouvert', @u)",
               new
               {
                   t = title,

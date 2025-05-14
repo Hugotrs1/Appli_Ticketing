@@ -112,7 +112,7 @@ public partial class UserDashboardViewModel : BaseViewModel
     {
         using var conn = _db.GetConnection();
         conn.Open();
-        var result = conn.Query<Ticket>("SELECT * FROM Tickets WHERE Status = 'Open' AND UserId = @UserId", new { UserId = _userId });
+        var result = conn.Query<Ticket>("SELECT * FROM Tickets WHERE Status = 'Ouvert' AND UserId = @UserId", new { UserId = _userId });
         foreach (var ticket in result)
         {
             if ((DateTime.Now - ticket.DateCreation).TotalMinutes > 10)

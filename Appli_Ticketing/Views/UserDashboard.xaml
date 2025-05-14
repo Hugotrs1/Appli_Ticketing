@@ -4,7 +4,7 @@
       Background="#043123">
 
     <Grid>
-        <Image Source="/Assets/backgroundfull.png"
+        <Image Source="/Assets/backgroundfull.jpg"
                Stretch="Fill"
                Panel.ZIndex="0"
                Opacity="0.8"/>

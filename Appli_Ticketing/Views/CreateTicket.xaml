@@ -3,11 +3,12 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       WindowStartupLocation="CenterScreen"
       Background="#043123"
+      WindowStyle="None"
       Width="400" Height="480">
 
 
     <Grid>
-        <Image Source="/Appli_Ticketing;component/Assets/backgroundfull.png"
+        <Image Source="/Appli_Ticketing;component/Assets/background.jpg"
                Stretch="Fill"
                Panel.ZIndex="0"
                Opacity="0.8"/>

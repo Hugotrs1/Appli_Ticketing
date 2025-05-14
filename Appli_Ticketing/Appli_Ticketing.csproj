@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <None Remove="Assets\background.jpg" />
-    <None Remove="Assets\backgroundfull.png" />
+    <None Remove="Assets\backgroundfull.jpg" />
     <None Remove="Assets\logo_app.png" />
   </ItemGroup>
 
@@ -32,7 +32,7 @@
     <Resource Include="Assets\background.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Assets\backgroundfull.png">
+    <Resource Include="Assets\backgroundfull.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\logo_app.png">

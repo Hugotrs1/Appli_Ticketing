@@ -58,5 +58,9 @@ namespace Appli_Ticketing.Views
             var registerWindow = new RegisterPage();
             registerWindow.ShowDialog();
         }
+        private void OnCloseClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

@@ -17,5 +17,10 @@ namespace Appli_Ticketing.Views
             DialogResult = true;
             Close();
         }
+        private void OnCancelClick(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+            Close();
+        }
     }
 }

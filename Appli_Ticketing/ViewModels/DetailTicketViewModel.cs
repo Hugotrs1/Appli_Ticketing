@@ -29,7 +29,7 @@ namespace Appli_Ticketing.ViewModels
                 "Data Source=PC-HUGO\\mssqlserver01;Initial Catalog=Appli_Ticketing;Integrated Security=True;Encrypt=False");
             conn.Open();
 
-            conn.Execute("UPDATE Tickets SET Title = @Title, Description = @Description, Type = @Type WHERE Id = @Id", Ticket);
+            conn.Execute("UPDATE Tickets SET Title = @Title, Description = @Description, Type = @Type, Response = @Response WHERE Id = @Id", Ticket);
 
             _closeAction?.Invoke();
         }
