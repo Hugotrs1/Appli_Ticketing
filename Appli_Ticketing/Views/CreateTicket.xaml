@@ -3,27 +3,57 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       WindowStartupLocation="CenterScreen"
       Background="#043123"
-      Width="500" Height="600">
+      Width="400" Height="480">
 
-    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="400" Height="400">
-        <Image Source="/Appli_Ticketing;component/Assets/logo_app.png" Width="55" Height="51" HorizontalAlignment="Center"/>
-        <TextBlock Text="Nouveau ticket" FontSize="24" Foreground="White" FontWeight="Bold" Margin="10" HorizontalAlignment="Center"/>
 
-        <TextBlock Text="Titre" Foreground="White" Margin="10,0,0,0"/>
-        <TextBox x:Name="TitleBox" Height="37" Width="380"/>
+    <Grid>
+        <Image Source="/Appli_Ticketing;component/Assets/backgroundfull.png"
+               Stretch="Fill"
+               Panel.ZIndex="0"
+               Opacity="0.8"/>
 
-        <TextBlock Text="Description" Foreground="White" Margin="10,10,0,5"/>
-        <TextBox x:Name="DescBox" Height="80" TextWrapping="Wrap" AcceptsReturn="True" Width="380"/>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="350" Height="440" Panel.ZIndex="1">
 
-        <TextBlock Text="Type" Foreground="White" Margin="10,0,0,10"/>
-        <ComboBox x:Name="TypeCombo" Height="30" Width="380">
-            <ComboBoxItem Content="Incident"/>
-            <ComboBoxItem Content="Demande"/>
-        </ComboBox>
+            <Image Source="/Appli_Ticketing;component/Assets/logo_app.png"
+                   Width="100" Height="100"
+                   HorizontalAlignment="Center"/>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
-            <Button Content="Valider" Width="120" Height="25" Click="OnSubmitClick" Margin="10,0,5,0"/>
-            <Button Content="Annuler" Width="120" Height="25" Click="OnCancelClick" Margin="10,0,0,0"/>
+            <TextBlock Text="Titre :" 
+                       FontSize="14" 
+                       FontWeight="Bold" 
+                       Foreground="#D3C29C"
+                       Margin="5,0,0,10"/> 
+            
+            <TextBox x:Name="TitleBox" Height="37" Width="380"/>
+
+            <TextBlock Text="Description :" 
+                       FontSize="14" 
+                       FontWeight="Bold" 
+                       Foreground="#D3C29C"
+                       Margin="5,10,0,10"/> 
+            
+            <TextBox x:Name="DescBox" Height="80" TextWrapping="Wrap" AcceptsReturn="True" Width="380"/>
+
+            <TextBlock Text="Type :" 
+                       FontSize="14" 
+                       FontWeight="Bold" 
+                       Foreground="#D3C29C"
+                       Margin="5,10,0,10"/>
+            
+            <ComboBox x:Name="TypeCombo" Height="30" Width="340">
+                
+                <ComboBoxItem Content="Incident"/>
+                <ComboBoxItem Content="Demande"/>
+            </ComboBox>
+
+            <StackPanel Grid.Row="1" 
+                        Orientation="Horizontal" 
+                        HorizontalAlignment="Center" 
+                        Margin="0,20,0,0">
+                
+                <Button Content="Valider" Width="120" Height="30" Click="OnSubmitClick" Margin="10,0,5,0"/>
+                <Button Content="Annuler" Width="120" Height="30" Click="OnCancelClick" Margin="10,0,0,0"/>
+            </StackPanel>
         </StackPanel>
-    </StackPanel>
+    </Grid>
 </Window>
