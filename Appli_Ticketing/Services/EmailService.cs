@@ -19,13 +19,12 @@ namespace Appli_Ticketing.Services
 
         public static async Task SendAsync(string to, string subject, string body, params string[] attachments)
         {
-
             var message = new MimeMessage();
             message.From.Add(MailboxAddress.Parse(From));
             message.To.Add(MailboxAddress.Parse(to));
             message.Subject = subject;
 
-            var builder = new BodyBuilder { TextBody = body };
+            var builder = new BodyBuilder { HtmlBody = body };
 
             if (attachments != null)
             {
@@ -46,5 +45,6 @@ namespace Appli_Ticketing.Services
             await client.SendAsync(message);
             await client.DisconnectAsync(true);
         }
+
     }
 }

@@ -11,7 +11,7 @@
   <ItemGroup>
     <None Remove="Assets\background.jpg" />
     <None Remove="Assets\backgroundfull.jpg" />
-    <None Remove="Assets\logo_app.png" />
+	  <None Remove="Assets\logo_app.png" />
   </ItemGroup>
 
   <ItemGroup>

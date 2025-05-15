@@ -15,8 +15,10 @@ namespace Appli_Ticketing.Converter
                     return new SolidColorBrush(Colors.Green); 
                 if (criticite >= 31 && criticite <= 70)
                     return new SolidColorBrush(Colors.Orange); 
-                if (criticite >= 71 && criticite <= 100)
+                if (criticite >= 71 && criticite <= 99)
                     return new SolidColorBrush(Colors.Red); 
+                if (criticite == 100)
+                    return new SolidColorBrush(Colors.DarkRed);
             }
             return new SolidColorBrush(Colors.Gray);
         }

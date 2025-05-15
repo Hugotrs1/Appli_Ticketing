@@ -2,12 +2,13 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
       WindowStyle="None"
       Background="#043123"
       Width="350" Height="500">
 
     <Grid>
-        <Image Source="/Appli_Ticketing;component/Assets/background.jpg"
+        <Image Source="/Appli_Ticketing;component/Assets/backgroundfull.jpg"
                Stretch="Fill"
                Panel.ZIndex="0"
                Opacity="0.8"/>
@@ -19,10 +20,10 @@
                    HorizontalAlignment="Center"/>
             
             <TextBlock Text="Inscription" 
-                       FontSize="21" 
+                       FontSize="25" 
                        Foreground="#D3C29C" 
                        FontWeight="Bold" 
-                       Margin="0,20,0,20" 
+                       Margin="0,10,0,20" 
                        HorizontalAlignment="Center"/>
 
             <TextBlock Text="Nom d’utilisateur :" Foreground="#D3C29C" Margin="10,10,0,5" FontSize="14"/>
