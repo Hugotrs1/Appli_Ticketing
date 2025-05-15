@@ -5,6 +5,9 @@
         Background="#043123"
         WindowStyle="None"
         Width="400" Height="530">
+    <Window.Resources>
+        <FontFamily x:Key="Rubik Distressed">/Appli_Ticketing;component/Fonts/#Rubik Distressed</FontFamily>
+    </Window.Resources>
 
     <Grid>
         <Image Source="/Appli_Ticketing;component/Assets/background.jpg"
@@ -12,26 +15,28 @@
                Panel.ZIndex="0"
                Opacity="0.8"/>
 
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="350" Height="530" Panel.ZIndex="1">
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="350" Height="520" Panel.ZIndex="1">
             <Image Source="/Appli_Ticketing;component/Assets/logo_app.png"
                Width="100" Height="100"
                HorizontalAlignment="Center"/>
 
             <TextBlock Text="Titre :" 
-                       FontSize="14" 
+                       FontSize="17" 
                        FontWeight="Bold" 
                        Foreground="#D3C29C"
-                       Margin="5,0,0,10"/>
+                       Margin="5,0,0,5"
+                       FontFamily="{StaticResource Rubik Distressed}"/>
 
             <TextBox Text="{Binding Ticket.Title}" 
                              Height="37" 
                              Opacity="0.8"/>
 
             <TextBlock Text="Description :" 
-                       FontSize="14" 
+                       FontSize="17" 
                        FontWeight="Bold" 
                        Foreground="#D3C29C"
-                       Margin="5,10,0,10"/>
+                       Margin="5,5,0,5"
+                       FontFamily="{StaticResource Rubik Distressed}"/>
 
             <TextBox Text="{Binding Ticket.Description}" 
                      Height="50"
@@ -39,10 +44,11 @@
                      Opacity="0.8"/>
 
             <TextBlock Text="Type :" 
-                       FontSize="14" 
+                       FontSize="17" 
                        FontWeight="Bold" 
                        Foreground="#D3C29C"
-                       Margin="5,10,0,10"/>
+                       Margin="5,5,0,10"
+                       FontFamily="{StaticResource Rubik Distressed}"/>
 
             <ComboBox SelectedValue="{Binding Ticket.Type, Mode=TwoWay}"
                               SelectedValuePath="Content"
@@ -54,10 +60,11 @@
             </ComboBox>
 
             <TextBlock Text="Réponse de l'Admin:" 
-                       FontSize="14" 
+                       FontSize="17" 
                        FontWeight="Bold" 
                        Foreground="#D3C29C"
-                       Margin="5,10,0,10"/>
+                       Margin="5,10,0,5"
+                       FontFamily="{StaticResource Rubik Distressed}"/>
 
             <TextBox Text="{Binding Ticket.Response}" 
                  Height="auto" 
@@ -70,12 +77,16 @@
                         Margin="0,20,0,0">
                 
                 <Button Content="Enregistrer"
-                                Width="120" Height="30"
-                                Command="{Binding SaveCommand}"/>
+                        Width="130" Height="40"
+                        Margin="10,0,30,0"
+                        Command="{Binding SaveCommand}"
+                        FontSize="18" FontFamily="{StaticResource Rubik Distressed}"/>
 
                 <Button Content="Fermer"
-                                Width="120" Height="30"
-                                Click="Close_Click"/>
+                        Width="130" Height="40"
+                        Margin="30,0,0,0"
+                        Click="Close_Click"
+                        FontSize="18" FontFamily="{StaticResource Rubik Distressed}"/>
             </StackPanel>
         </StackPanel>
     </Grid>

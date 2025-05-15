@@ -3,9 +3,10 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:vm="clr-namespace:Appli_Ticketing.Views"
       xmlns:conv="clr-namespace:Appli_Ticketing.Converter"
-    Background="#043123">
+      Background="#043123">
 
     <Page.Resources>
+        <FontFamily x:Key="Rubik Distressed">/Appli_Ticketing;component/Fonts/#Rubik Distressed</FontFamily>
         <conv:CriticiteConverter x:Key="CriticiteConverter"/>
         <conv:DateTimeConverter x:Key="DateTimeConverter"/>
     </Page.Resources>
@@ -18,8 +19,8 @@
 
         <DockPanel Margin="20" Panel.ZIndex="1">
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0 0 0 20" VerticalAlignment="Center">
-                <Image Source="/Appli_Ticketing;component/Assets/logo_app.png" Width="100" Height="100" Margin="0 0 10 0"/>
-                <TextBlock Text="Gestion des Tickets" FontSize="50" Foreground="#D3C29C" FontWeight="Bold" Margin="0,10,0,0"/>
+                <Image Source="/Appli_Ticketing;component/Assets/logo_app.png" Width="150" Height="150"/>
+                <TextBlock Text="Gestion des Tickets" FontSize="55" VerticalAlignment="Center" Margin="300,0,0,0" Foreground="#D3C29C" FontWeight="Bold" FontFamily="{StaticResource Rubik Distressed}"/>
             </StackPanel>
 
             <Grid>
@@ -43,7 +44,7 @@
                         <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*"/>
                         <DataGridTextColumn Header="Utilisateur" Binding="{Binding UserName}" Width="100"/>
                         <DataGridTextColumn Header="Statut"     Binding="{Binding Status}"    Width="100"/>
-                        <DataGridTextColumn Header="Date de création" Binding="{Binding DateCreation, Converter={StaticResource DateTimeConverter}}" Width="*"/>
+                        <DataGridTextColumn Header="Création" Binding="{Binding DateCreation, Converter={StaticResource DateTimeConverter}}" Width="*"/>
                         <DataGridTextColumn Header="Réponse"    Binding="{Binding Response}"  Width="*"/>
 
 
@@ -58,11 +59,11 @@
                 </DataGrid>
 
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
-                    <Button Content="Répondre" Height="30" Width="100" Command="{Binding RespondCommand}" Margin="5"/>
-                    <Button Content="Mettre en Attente" Height="30" Width="120" Command="{Binding SetOnHoldCommand}" Margin="5"/>
-                    <Button Content="Détails" Height="30" Width="100" Command="{Binding DetailCommand}" Margin="5"/>
-                    <Button Content="Supprimer" Height="30" Width="100" Command="{Binding DeleteCommand}" Margin="5"/>
-                    <Button Content="Se Déconnecter" Width="120" Height="30" Command="{Binding LogoutCommand}" Margin="5"/>
+                    <Button Content="Répondre"  Width="120" Height="40" Command="{Binding RespondCommand}" Margin="10,0,30,0" FontSize="20" FontFamily="{StaticResource Rubik Distressed}"/>
+                    <Button Content="Mettre en Attente"  Width="220" Height="40" Command="{Binding SetOnHoldCommand}" Margin="10,0,30,0" FontSize="20" FontFamily="{StaticResource Rubik Distressed}"/>
+                    <Button Content="Détails"  Width="120" Height="40" Command="{Binding DetailCommand}" Margin="10,0,30,0" FontSize="20" FontFamily="{StaticResource Rubik Distressed}"/>
+                    <Button Content="Supprimer"  Width="120" Height="40" Command="{Binding DeleteCommand}" Margin="10,0,30,0" FontSize="20" FontFamily="{StaticResource Rubik Distressed}"/>
+                    <Button Content="Se Déconnecter"  Width="200" Height="40" Command="{Binding LogoutCommand}" Margin="10,0,30,0" FontSize="20" FontFamily="{StaticResource Rubik Distressed}"/>
                 </StackPanel>
             </Grid>
         </DockPanel>

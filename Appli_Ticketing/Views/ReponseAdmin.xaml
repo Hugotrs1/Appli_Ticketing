@@ -4,32 +4,36 @@
         Background="#043123"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
-        Width="400" Height="480">
-
+        Width="400" Height="550">
+    <Window.Resources>
+        <FontFamily x:Key="Rubik Distressed">/Appli_Ticketing;component/Fonts/#Rubik Distressed</FontFamily>
+    </Window.Resources>
     <Grid>
         <Image Source="/Appli_Ticketing;component/Assets/background.jpg"
                Stretch="Fill"
                Panel.ZIndex="0"
                Opacity="0.8"/>
 
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="350" Height="440" Panel.ZIndex="1">
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="350" Height="520" Panel.ZIndex="1">
 
             <Image Source="/Appli_Ticketing;component/Assets/logo_app.png"
-                   Width="150" Height="150"
+                   Width="200" Height="200"
                    HorizontalAlignment="Center"/>
 
             <TextBlock Text="Votre réponse :" 
-                       FontSize="14" 
+                       FontSize="20" 
                        FontWeight="Bold" 
                        Foreground="#D3C29C"
-                       Margin="10,0,0,10"/>
+                       Margin="10,0,0,10"
+                       FontFamily="{StaticResource Rubik Distressed}"/>
 
             <TextBox x:Name="ResponseTextBox"
-                    Height="100" Width="330">
+                    Height="100" Width="330"
+                     Opacity="0.8">
             </TextBox>
-            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
-                <Button Content="Envoyer" Width="120" Height="35" Margin="10,20,0,0" HorizontalAlignment="Center" Click="OnSendClick"/>
-                <Button Content="Annuler" Width="120" Height="35" Margin="10,20,0,0" HorizontalAlignment="Center" Click="OnCancelClick"/>
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,30,0,0">
+                <Button Content="Envoyer"  Width="120" Height="40" Margin="10,0,30,0" HorizontalAlignment="Center" Click="OnSendClick" FontSize="20" FontFamily="{StaticResource Rubik Distressed}"/>
+                <Button Content="Annuler"  Width="120" Height="40"  Margin="30,0,0,0" HorizontalAlignment="Center" Click="OnCancelClick" FontSize="20" FontFamily="{StaticResource Rubik Distressed}"/>
             </StackPanel>
         </StackPanel>
     </Grid>

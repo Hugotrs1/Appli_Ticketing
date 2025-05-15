@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.IO;
 using System.Threading.Tasks;
 using MailKit.Net.Smtp;
 using MailKit.Security;
@@ -17,25 +18,34 @@ namespace Appli_Ticketing.Services
         private static readonly string Pass = ConfigurationManager.AppSettings["SmtpPass"];
         private static readonly string From = ConfigurationManager.AppSettings["FromAddress"];
 
-        public static async Task SendAsync(string to, string subject, string body, params string[] attachments)
+        public static async Task SendAsync(string to, string subject, string bodyHtml, string imagePath = null)
         {
             var message = new MimeMessage();
             message.From.Add(MailboxAddress.Parse(From));
             message.To.Add(MailboxAddress.Parse(to));
             message.Subject = subject;
 
-            var builder = new BodyBuilder { HtmlBody = body };
+            string contentId = "CriticiteImage";
 
-            if (attachments != null)
+            var builder = new BodyBuilder();
+
+            if (!string.IsNullOrWhiteSpace(imagePath) && File.Exists(imagePath))
             {
-                foreach (var file in attachments)
-                {
-                    if (System.IO.File.Exists(file))
-                        builder.Attachments.Add(file);
-                }
+                var image = builder.LinkedResources.Add(imagePath);
+                image.ContentId = contentId;
+                image.ContentType.MediaType = "image";
+                image.ContentType.Name = Path.GetFileName(imagePath);
             }
 
-            message.Body = builder.ToMessageBody();
+            builder.HtmlBody = bodyHtml;
+
+            
+            var multipart = new Multipart("related")
+    {
+        builder.ToMessageBody() 
+    };
+
+            message.Body = multipart;
 
             using var client = new SmtpClient();
             await client.ConnectAsync(Host, Port, SecureSocketOptions.StartTls);

@@ -5,6 +5,9 @@
       Background="#043123"
       WindowStyle="None"
       Width="400" Height="550">
+    <Window.Resources>
+        <FontFamily x:Key="Rubik Distressed">/Appli_Ticketing;component/Fonts/#Rubik Distressed</FontFamily>
+    </Window.Resources>
     <Grid>
         <Image Source="/Appli_Ticketing;component/Assets/background.jpg"
                Stretch="Fill"
@@ -18,41 +21,46 @@
                    HorizontalAlignment="Center"/>
 
             <TextBlock Text="Titre :" 
-                       FontSize="14" 
+                       FontSize="17" 
                        FontWeight="Bold" 
                        Foreground="#D3C29C"
-                       Margin="5,0,0,10"/> 
+                       Margin="5,0,0,5"
+                       FontFamily="{StaticResource Rubik Distressed}"/> 
             
-            <TextBox x:Name="TitleBox" Height="37" Width="380"/>
+            <TextBox x:Name="TitleBox" Height="37" Width="340" Opacity="0.8"/>
 
             <TextBlock Text="Description :" 
-                       FontSize="14" 
+                       FontSize="17" 
                        FontWeight="Bold" 
                        Foreground="#D3C29C"
-                       Margin="5,10,0,10"/> 
+                       Margin="5,10,0,5"
+                       FontFamily="{StaticResource Rubik Distressed}"/> 
             
-            <TextBox x:Name="DescBox" Height="80" TextWrapping="Wrap" AcceptsReturn="True" Width="380"/>
+            <TextBox x:Name="DescBox" Height="80" TextWrapping="Wrap" AcceptsReturn="True" Width="340" Opacity="0.8"/>
 
             <TextBlock Text="Type :" 
-                       FontSize="14" 
+                       FontSize="17" 
                        FontWeight="Bold" 
                        Foreground="#D3C29C"
-                       Margin="5,10,0,10"/>
+                       Margin="5,10,0,10"
+                       FontFamily="{StaticResource Rubik Distressed}"/>
             
-            <ComboBox x:Name="TypeCombo" Height="30" Width="340">
+            <ComboBox x:Name="TypeCombo" Height="30" Width="340" Opacity="0.8">
                 <ComboBoxItem Content="Incident"/>
                 <ComboBoxItem Content="Demande"/>
             </ComboBox>
 
             <TextBlock Text="Problème :" 
-                       FontSize="14" 
+                       FontSize="17" 
                        FontWeight="Bold" 
                        Foreground="#D3C29C"
-                       Margin="5,10,0,10"/>
+                       Margin="5,10,0,10"
+                       FontFamily="{StaticResource Rubik Distressed}"/>
 
             <ComboBox x:Name="ProblemeCombo" 
                       Height="30" 
                       Width="340"
+                      Opacity="0.8"
                       DisplayMemberPath="Nom"/>
 
             <StackPanel Grid.Row="1" 
@@ -60,8 +68,8 @@
                         HorizontalAlignment="Center" 
                         Margin="0,20,0,0">
 
-                <Button Content="Valider" Width="120" Height="30" Click="OnSubmitClick" Margin="10,0,5,0"/>
-                <Button Content="Annuler" Width="120" Height="30" Click="OnCancelClick" Margin="10,0,0,0"/>
+                <Button Content="Valider" Width="120" Height="40" Click="OnSubmitClick" Margin="10,0,30,0" FontSize="20" FontFamily="{StaticResource Rubik Distressed}"/>
+                <Button Content="Annuler" Width="120" Height="40" Click="OnCancelClick" Margin="30,0,0,0" FontSize="20" FontFamily="{StaticResource Rubik Distressed}"/>
             </StackPanel>
         </StackPanel>
     </Grid>

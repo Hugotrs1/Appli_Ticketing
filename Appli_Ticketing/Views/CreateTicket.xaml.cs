@@ -20,7 +20,7 @@ namespace Appli_Ticketing.Views
             _userId = userId;
         }
 
-        private async void OnSubmitClick(object sender, RoutedEventArgs e)
+        private void OnSubmitClick(object sender, RoutedEventArgs e)
         {
             var title = TitleBox.Text.Trim();
             var desc = DescBox.Text.Trim();
@@ -38,16 +38,15 @@ namespace Appli_Ticketing.Views
             }
 
             int newId;
-
             using (var conn = _db.GetConnection())
             {
                 conn.Open();
                 newId = conn.QuerySingle<int>(
                   @"INSERT INTO Tickets 
-                     (Title, Description, Type, DateCreation, Status, UserId, ProblemeId)
-                    OUTPUT INSERTED.Id
-                    VALUES 
-                     (@t, @d, @ty, @dt, 'Ouvert', @u, @pid)",
+             (Title, Description, Type, DateCreation, Status, UserId, ProblemeId)
+            OUTPUT INSERTED.Id
+            VALUES 
+             (@t, @d, @ty, @dt, 'Ouvert', @u, @pid)",
                   new
                   {
                       t = title,
@@ -59,8 +58,8 @@ namespace Appli_Ticketing.Views
                   });
             }
 
-            const string adminEmail = "trousselhugo@gmail.com";
-            string sujet = $"Nouveau ticket !";
+            string adminEmail = "trousselhugo@gmail.com";
+            string sujet = "Nouveau ticket !";
 
             string corpsHtml = $@"
 <!DOCTYPE html>
@@ -125,6 +124,11 @@ namespace Appli_Ticketing.Views
             font-size: 0.9em;
             color: #555;
         }}
+        .criticite-img {{
+            display: block;
+            max-width: 600px;
+            height: auto;
+        }}
     </style>
 </head>
 <body>
@@ -141,16 +145,17 @@ namespace Appli_Ticketing.Views
             <div class=""criticite"">
                 Criticité : {probleme.Criticite}
             </div>
+            <img src=""cid:CriticiteImage"" alt=""Criticité"" class=""criticite-img"" />
         </div>
         <div class=""footer"">
-            Appli Ticketing 
+            Appli Ticketing
         </div>
     </div>
 </body>
 </html>
 ";
 
-            var imagePath = "";
+            string imagePath = "";
             if (probleme.Criticite < 30)
                 imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets/Alerte_Jaune.png");
             else if (probleme.Criticite < 70)
@@ -160,17 +165,21 @@ namespace Appli_Ticketing.Views
             else if (probleme.Criticite == 100)
                 imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets/Alerte_Max.png");
 
-            if (File.Exists(imagePath))
-                await EmailService.SendAsync(adminEmail, sujet, corpsHtml, imagePath);
-            else
-                await EmailService.SendAsync(adminEmail, sujet, corpsHtml);
+            // Message immédiat à l'utilisateur
+            MessageBox.Show("Ticket créé — l'email est en cours d'envoi.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            MessageBox.Show("Ticket créé et mail envoyé à l’administrateur.", "Succès",
-                            MessageBoxButton.OK, MessageBoxImage.Information);
-
+            // Envoi mail en tâche de fond
+            _ = Task.Run(async () =>
+            {
+                if (File.Exists(imagePath))
+                    await EmailService.SendAsync(adminEmail, sujet, corpsHtml, imagePath);
+                else
+                    await EmailService.SendAsync(adminEmail, sujet, corpsHtml);
+            });
 
             this.Close();
         }
+
 
         private void OnCancelClick(object sender, RoutedEventArgs e)
         {
