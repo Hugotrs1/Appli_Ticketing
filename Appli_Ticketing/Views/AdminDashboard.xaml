@@ -39,16 +39,16 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="ID"         Binding="{Binding Id}"        Width="50"/>
                         <DataGridTextColumn Header="Titre"      Binding="{Binding Title}"     Width="*"/>
-                        <DataGridTextColumn Header="Type"       Binding="{Binding Type}"      Width="*"/>
-                        <DataGridTextColumn Header="Problème"   Binding="{Binding ProblemName}"  Width="*"/>
+                        <DataGridTextColumn Header="Type"       Binding="{Binding Type}"      Width="70"/>
+                        <DataGridTextColumn Header="Problème"   Binding="{Binding ProblemName}"  Width="300"/>
                         <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*"/>
                         <DataGridTextColumn Header="Utilisateur" Binding="{Binding UserName}" Width="100"/>
-                        <DataGridTextColumn Header="Statut"     Binding="{Binding Status}"    Width="100"/>
-                        <DataGridTextColumn Header="Création" Binding="{Binding DateCreation, Converter={StaticResource DateTimeConverter}}" Width="*"/>
+                        <DataGridTextColumn Header="Statut"     Binding="{Binding Status}"    Width="70"/>
+                        <DataGridTextColumn Header="Création" Binding="{Binding DateCreation, Converter={StaticResource DateTimeConverter}}" Width="150"/>
                         <DataGridTextColumn Header="Réponse"    Binding="{Binding Response}"  Width="*"/>
 
 
-                        <DataGridTemplateColumn Header="Criticité">
+                        <DataGridTemplateColumn Header="Criticité" Width="50" >
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Ellipse Width="20" Height="20" Fill="{Binding ProblemCriticite, Converter={StaticResource CriticiteConverter}}"/>

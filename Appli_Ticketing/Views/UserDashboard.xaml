@@ -37,13 +37,13 @@
                       IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Titre" Binding="{Binding Title}" Width="*"/>
-                    <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="*"/>
-                    <DataGridTextColumn Header="Problème" Binding="{Binding ProblemName}" Width="*"/>
+                    <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="70"/>
+                    <DataGridTextColumn Header="Problème" Binding="{Binding ProblemName}" Width="300"/>
                     <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*"/>
-                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*"/>
-                        <DataGridTextColumn Header="Date de création" Binding="{Binding DateCreation, Converter={StaticResource DateTimeConverter}}" Width="*"/>
+                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="70"/>
+                        <DataGridTextColumn Header="Date de création" Binding="{Binding DateCreation, Converter={StaticResource DateTimeConverter}}" Width="150"/>
                         <DataGridTextColumn Header="Réponse" Binding="{Binding Response}" Width="*"/>
-                        <DataGridTemplateColumn Header="Criticité">
+                        <DataGridTemplateColumn Header="Criticité" Width="50">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Ellipse Width="20" Height="20" Fill="{Binding ProblemCriticite, Converter={StaticResource CriticiteConverter}}"/>
