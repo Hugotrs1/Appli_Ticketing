@@ -58,10 +58,14 @@ public partial class UserDashboardViewModel : BaseViewModel
             @"SELECT t.*, u.Username AS UserName, p.Nom AS ProblemName, p.Criticite AS ProblemCriticite 
           FROM Tickets t
           INNER JOIN Users u ON t.UserId = u.Id
-          LEFT JOIN Problemes p ON t.ProblemeId = p.Id").ToList();
+          LEFT JOIN Problemes p ON t.ProblemeId = p.Id
+          WHERE t.UserId = @UserId",
+            new { UserId = _userId }
+        ).ToList();
 
         Tickets = new ObservableCollection<Ticket>(list);
     }
+
 
     private void ShowDetails()
     {

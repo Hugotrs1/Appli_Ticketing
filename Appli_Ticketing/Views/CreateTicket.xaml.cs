@@ -71,65 +71,94 @@ namespace Appli_Ticketing.Views
     <title>Nouveau Ticket Créé</title>
     <style>
         body {{
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f6f8;
             margin: 0;
             padding: 20px;
         }}
         .container {{
             max-width: 600px;
             margin: auto;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }}
+        .header {{
+            background-color: #2E86C1;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }}
+        .header h2 {{
+            margin: 0;
+            font-size: 24px;
+        }}
+        .content {{
             padding: 20px;
         }}
-        h2 {{
-            color: #2E86C1;
-            border-bottom: 2px solid #2E86C1;
-            padding-bottom: 10px;
-        }}
-        p {{
+        .content p {{
             color: #333;
             line-height: 1.6;
-        }}
-        .footer {{
-            margin-top: 20px;
-            font-size: 0.9em;
-            color: #777;
+            margin: 10px 0;
         }}
         .highlight {{
             background-color: #e7f3fe;
-            border-left: 4px solid #2E86C1;
-            padding: 10px;
-            margin: 10px 0;
+            border-left: 5px solid #2E86C1;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }}
+        .criticite {{
+            background-color: #fef5e7;
+            border-left: 5px solid #f5b041;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 6px;
+            color: #7d6608;
+            font-weight: bold;
+        }}
+        .footer {{
+            background-color: #f0f0f0;
+            text-align: center;
+            padding: 15px;
+            font-size: 0.9em;
+            color: #555;
         }}
     </style>
 </head>
 <body>
     <div class=""container"">
-        <h2>Nouveau ticket créé</h2>
-        <p><strong>ID :</strong> {newId}</p>
-        <p><strong>Titre :</strong> {title}</p>
-        <div class=""highlight"">
-            <p><strong>Description :</strong><br/>{desc}</p>
+        <div class=""header"">
+            <h2>🎫 Nouveau ticket créé</h2>
         </div>
-        <p><strong>Criticité :</strong> {probleme.Criticite}</p>
+        <div class=""content"">
+            <p><strong>ID :</strong> {newId}</p>
+            <p><strong>Titre :</strong> {title}</p>
+            <div class=""highlight"">
+                <p><strong>Description :</strong><br/>{desc}</p>
+            </div>
+            <div class=""criticite"">
+                Criticité : {probleme.Criticite}
+            </div>
+        </div>
         <div class=""footer"">
-            <p><strong>Cordialement,<br/>Appli Ticketing</strong></p>
+            Appli Ticketing 
         </div>
     </div>
 </body>
 </html>
->";
+";
 
             var imagePath = "";
             if (probleme.Criticite < 30)
-                imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "faible.png");
+                imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets/Alerte_Jaune.png");
             else if (probleme.Criticite < 70)
-                imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "moyen.png");
-            else
-                imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "eleve.png");
+                imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets/Alerte_Orange.png");
+            else if (probleme.Criticite < 100)
+                imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets/Alerte_Rouge.png");
+            else if (probleme.Criticite == 100)
+                imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets/Alerte_Max.png");
 
             if (File.Exists(imagePath))
                 await EmailService.SendAsync(adminEmail, sujet, corpsHtml, imagePath);
@@ -147,12 +176,12 @@ namespace Appli_Ticketing.Views
         {
             this.Close();
         }
-
+        
         private void LoadProblemes()
         {
             using var conn = _db.GetConnection();
             conn.Open();
-            var problemes = conn.Query<Probleme>("SELECT * FROM Problemes");
+            var problemes = conn.Query<Probleme>("SELECT * FROM Problemes ORDER BY Criticite ASC");
             ProblemeCombo.ItemsSource = problemes;
         }
     }
