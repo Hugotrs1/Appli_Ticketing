@@ -1,6 +1,8 @@
 ﻿using Appli_Ticketing.Models;
+using Appli_Ticketing.Services;
 using Dapper;
 using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -11,7 +13,6 @@ namespace Appli_Ticketing.Views
         private readonly int _userId;
         private readonly DatabaseService _db = new();
 
-        // On passe l'ID de l'utilisateur via le constructeur
         public CreateTicket(int userId)
         {
             InitializeComponent();
@@ -19,14 +20,13 @@ namespace Appli_Ticketing.Views
             _userId = userId;
         }
 
-        private void OnSubmitClick(object sender, RoutedEventArgs e)
+        private async void OnSubmitClick(object sender, RoutedEventArgs e)
         {
             var title = TitleBox.Text.Trim();
             var desc = DescBox.Text.Trim();
             var type = (TypeCombo.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? "";
             var probleme = ProblemeCombo.SelectedItem as Probleme;
 
-            // Vérification des champs obligatoires
             if (string.IsNullOrWhiteSpace(title) ||
                 string.IsNullOrWhiteSpace(desc) ||
                 string.IsNullOrWhiteSpace(type) ||
@@ -37,24 +37,49 @@ namespace Appli_Ticketing.Views
                 return;
             }
 
-            using var conn = _db.GetConnection();
-            conn.Open();
-            conn.Execute(
-              @"INSERT INTO Tickets 
-                 (Title, Description, Type, DateCreation, Status, UserId, ProblemeId) 
-                VALUES 
-                 (@t, @d, @ty, @dt, 'Ouvert', @u, @pid)",
-              new
-              {
-                  t = title,
-                  d = desc,
-                  ty = type,
-                  dt = DateTime.Now,
-                  u = _userId,
-                  pid = probleme.Id
-              });
+            int newId;
 
-            MessageBox.Show("Ticket créé !", "Succès",
+            using (var conn = _db.GetConnection())
+            {
+                conn.Open();
+                newId = conn.QuerySingle<int>(
+                  @"INSERT INTO Tickets 
+                     (Title, Description, Type, DateCreation, Status, UserId, ProblemeId)
+                    OUTPUT INSERTED.Id
+                    VALUES 
+                     (@t, @d, @ty, @dt, 'Ouvert', @u, @pid)",
+                  new
+                  {
+                      t = title,
+                      d = desc,
+                      ty = type,
+                      dt = DateTime.Now,
+                      u = _userId,
+                      pid = probleme.Id
+                  });
+            }
+
+            const string adminEmail = "admin@votreentreprise.com";
+            string sujet = $"[Ticket #{newId}] Nouveau ticket";
+            string corps = $@"
+                Bonjour,
+
+                Un nouveau ticket (ID {newId}) a été créé.
+
+                Titre       : {title}
+                Description : {desc}
+
+                Cordialement.";
+
+            await EmailService.SendAsync(adminEmail, sujet, corps);
+
+            var imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "dino.jpg");
+            if (File.Exists(imagePath))
+            {
+                await EmailService.SendAsync(adminEmail, sujet, corps, imagePath);
+            }
+
+            MessageBox.Show("Ticket créé et mail envoyé à l’administrateur.", "Succès",
                             MessageBoxButton.OK, MessageBoxImage.Information);
 
             this.Close();
