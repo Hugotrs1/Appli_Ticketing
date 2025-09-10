@@ -6,9 +6,11 @@
         WindowStyle="None"
         Background="#043123"
         Width="1920" Height="1080">
+
     <Window.Resources>
         <FontFamily x:Key="Rubik Distressed">/Appli_Ticketing;component/Fonts/#Rubik Distressed</FontFamily>
     </Window.Resources>
+
     <Grid>
         <Image Source="/Appli_Ticketing;component/Assets/backgroundfull.jpg"
                Stretch="Fill"
@@ -31,17 +33,32 @@
                        FontFamily="{StaticResource Rubik Distressed}"/>
 
             <TextBlock Text="Nom d’utilisateur :" Foreground="#D3C29C" Margin="10,10,0,5" FontSize="25" FontFamily="{StaticResource Rubik Distressed}"/>
-            <TextBox x:Name="UsernameTextBox" Height="45" Width="500" Opacity="0.8"/>
+            <TextBox Height="45" Width="500"
+                     Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+                     Opacity="0.8"/>
 
             <TextBlock Text="Mot de passe :" Foreground="#D3C29C" Margin="10,5,0,5" FontSize="25" FontFamily="{StaticResource Rubik Distressed}"/>
-            <PasswordBox x:Name="PasswordBox" Height="45" Width="500" Opacity="0.8"/>
+            <PasswordBox Height="45" Width="500" 
+                         PasswordChanged="PasswordBox_OnPasswordChanged"
+                         Opacity="0.8"/>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
-                <Button Content="Se connecter" Width="180" Height="50" Click="OnLoginClick" Margin="10,0,40,0" FontSize="20" FontFamily="{StaticResource Rubik Distressed}"/>
-                <Button Content="S'inscrire" Width="180" Height="50" Click="OnRegisterClick" Margin="40,0,0,0"  FontSize="20" FontFamily="{StaticResource Rubik Distressed}"/>
+                <Button Content="Se connecter" Width="180" Height="50"
+                        Command="{Binding LoginCommand}"
+                        Margin="10,0,40,0"
+                        FontSize="20"
+                        FontFamily="{StaticResource Rubik Distressed}"/>
+                <Button Content="S'inscrire" Width="180" Height="50"
+                        Command="{Binding RegisterCommand}"
+                        Margin="40,0,0,0"
+                        FontSize="20"
+                        FontFamily="{StaticResource Rubik Distressed}"/>
             </StackPanel>
-            <Button Content="Fermer" Width="180" Height="50" Click="OnCloseClick" Margin="0,40,0,0" FontSize="20" HorizontalAlignment="Center" FontFamily="{StaticResource Rubik Distressed}"/>
 
+            <Button Content="Fermer" Width="180" Height="50" 
+                    Click="OnCloseClick"
+                    Margin="0,40,0,0" FontSize="20" HorizontalAlignment="Center"
+                    FontFamily="{StaticResource Rubik Distressed}"/>
         </StackPanel>
     </Grid>
 </Window>

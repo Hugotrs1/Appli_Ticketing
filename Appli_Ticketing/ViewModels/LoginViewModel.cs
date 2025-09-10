@@ -1,11 +1,12 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using System.Windows;
-using Appli_Ticketing.Views;
-using Dapper;
-using Appli_Ticketing;
-using System.Windows.Input;
+﻿using Appli_Ticketing;
 using Appli_Ticketing.Models;
+using Appli_Ticketing.Services;
+using Appli_Ticketing.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Dapper;
+using System.Windows;
+using System.Windows.Input;
 
 public partial class LoginViewModel : ObservableObject
 {
@@ -15,23 +16,32 @@ public partial class LoginViewModel : ObservableObject
     private readonly DatabaseService _db;
 
     public ICommand LoginCommand { get; }
-
-    public ICommand RegisterRedirectCommand { get; }
+    public ICommand RegisterCommand { get; }
 
     public LoginViewModel()
     {
         _db = new DatabaseService();
-
-        // Initialisation des commandes
         LoginCommand = new RelayCommand(Login);
-        RegisterRedirectCommand = new RelayCommand(RedirectToRegisterPage);
+        RegisterCommand = new RelayCommand(OpenRegisterWindow);
     }
+
+    private void OpenRegisterWindow()
+    {
+        var registerWindow = new RegisterPage();
+        registerWindow.Owner = Application.Current.MainWindow;
+        registerWindow.ShowDialog();
+    }
+
 
     private void Login()
     {
         var user = Authenticate();
         if (user != null)
         {
+            var mainWindow = new MainWindow(user);
+            mainWindow.Show();
+
+            Application.Current.Windows[0]?.Close();
         }
         else
         {
@@ -41,16 +51,13 @@ public partial class LoginViewModel : ObservableObject
 
     private User Authenticate()
     {
+        string hashedPwd = SecurityHelper.HashPassword(Password);
+
         using var conn = _db.GetConnection();
         conn.Open();
         var user = conn.QueryFirstOrDefault<User>(
             "SELECT * FROM Users WHERE Username = @Username AND Password = @Password",
-            new { Username = username, Password = password });
+            new { Username = username, Password = hashedPwd });
         return user;
-    }
-    private void RedirectToRegisterPage()
-    {
-        var mainWindow = Application.Current.MainWindow as MainWindow;
-        mainWindow?.MainFrame.Navigate(new RegisterPage());
     }
 }

@@ -3,6 +3,7 @@ using Appli_Ticketing.Services;
 using Dapper;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -37,26 +38,20 @@ namespace Appli_Ticketing.Views
                 return;
             }
 
-            int newId;
-            using (var conn = _db.GetConnection())
+            var ticket = new Ticket
             {
-                conn.Open();
-                newId = conn.QuerySingle<int>(
-                  @"INSERT INTO Tickets 
-             (Title, Description, Type, DateCreation, Status, UserId, ProblemeId)
-            OUTPUT INSERTED.Id
-            VALUES 
-             (@t, @d, @ty, @dt, 'Ouvert', @u, @pid)",
-                  new
-                  {
-                      t = title,
-                      d = desc,
-                      ty = type,
-                      dt = DateTime.Now,
-                      u = _userId,
-                      pid = probleme.Id
-                  });
-            }
+                Title = title,
+                Description = desc,
+                Type = type,
+                DateCreation = DateTime.Now,
+                Status = "Ouvert",
+                UserId = _userId,
+                ProblemName = probleme.Nom,        
+                ProblemCriticite = probleme.Criticite
+            };
+
+            int newId = _db.AddTicket(ticket);
+
 
             string adminEmail = "trousselhugo@gmail.com";
             string sujet = "Nouveau ticket !";
@@ -66,13 +61,11 @@ namespace Appli_Ticketing.Views
 <html lang=""fr"">
 <head>
     <meta charset=""UTF-8"">
-    <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">
     <title>Nouveau Ticket Créé</title>
     <style>
         body {{
             font-family: 'Segoe UI', sans-serif;
             background-color: #f4f6f8;
-            margin: 0;
             padding: 20px;
         }}
         .container {{
@@ -89,18 +82,7 @@ namespace Appli_Ticketing.Views
             padding: 20px;
             text-align: center;
         }}
-        .header h2 {{
-            margin: 0;
-            font-size: 24px;
-        }}
-        .content {{
-            padding: 20px;
-        }}
-        .content p {{
-            color: #333;
-            line-height: 1.6;
-            margin: 10px 0;
-        }}
+        .content {{ padding: 20px; }}
         .highlight {{
             background-color: #e7f3fe;
             border-left: 5px solid #2E86C1;
@@ -116,18 +98,6 @@ namespace Appli_Ticketing.Views
             border-radius: 6px;
             color: #7d6608;
             font-weight: bold;
-        }}
-        .footer {{
-            background-color: #f0f0f0;
-            text-align: center;
-            padding: 15px;
-            font-size: 0.9em;
-            color: #555;
-        }}
-        .criticite-img {{
-            display: block;
-            max-width: 600px;
-            height: auto;
         }}
     </style>
 </head>
@@ -145,15 +115,14 @@ namespace Appli_Ticketing.Views
             <div class=""criticite"">
                 Criticité : {probleme.Criticite}
             </div>
-            <img src=""cid:CriticiteImage"" alt=""Criticité"" class=""criticite-img"" />
+            <img src=""cid:CriticiteImage"" alt=""Criticité"" />
         </div>
         <div class=""footer"">
             Appli Ticketing
         </div>
     </div>
 </body>
-</html>
-";
+</html>";
 
             string imagePath = "";
             if (probleme.Criticite < 30)
@@ -165,10 +134,7 @@ namespace Appli_Ticketing.Views
             else if (probleme.Criticite == 100)
                 imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets/Alerte_Max.png");
 
-            // Message immédiat à l'utilisateur
             MessageBox.Show("Ticket créé — l'email est en cours d'envoi.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
-
-            // Envoi mail en tâche de fond
             _ = Task.Run(async () =>
             {
                 if (File.Exists(imagePath))
@@ -180,18 +146,14 @@ namespace Appli_Ticketing.Views
             this.Close();
         }
 
-
         private void OnCancelClick(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
-        
+
         private void LoadProblemes()
         {
-            using var conn = _db.GetConnection();
-            conn.Open();
-            var problemes = conn.Query<Probleme>("SELECT * FROM Problemes ORDER BY Criticite ASC");
-            ProblemeCombo.ItemsSource = problemes;
+            ProblemeCombo.ItemsSource = _db.GetProblemes();
         }
     }
 }

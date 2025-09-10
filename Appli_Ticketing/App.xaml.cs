@@ -14,7 +14,6 @@ namespace Appli_Ticketing
         {
             base.OnStartup(e);
 
-            // Initialise le MediaPlayer
             _player = new MediaPlayer();
 
             var path = Path.Combine(

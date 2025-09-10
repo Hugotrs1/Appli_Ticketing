@@ -11,12 +11,12 @@ namespace Appli_Ticketing.Services
     public static class EmailService
     {
 
-        private static readonly string Host = ConfigurationManager.AppSettings["SmtpHost"];
-        private static readonly int Port = int.Parse(ConfigurationManager.AppSettings["SmtpPort"]);
-        private static readonly bool EnableSsl = bool.Parse(ConfigurationManager.AppSettings["EnableSsl"]);
-        private static readonly string User = ConfigurationManager.AppSettings["SmtpUser"];
-        private static readonly string Pass = ConfigurationManager.AppSettings["SmtpPass"];
-        private static readonly string From = ConfigurationManager.AppSettings["FromAddress"];
+        private static readonly string Host = ConfigurationManager.AppSettings["SmtpHost"] ?? throw new InvalidOperationException("SmtpHost n'est pas configuré.");
+        private static readonly int Port = int.TryParse(ConfigurationManager.AppSettings["SmtpPort"], out var port) ? port : throw new InvalidOperationException("SmtpPort n'est pas configuré ou n'est pas un entier valide.");
+        private static readonly bool EnableSsl = bool.TryParse(ConfigurationManager.AppSettings["EnableSsl"], out var enableSsl) ? enableSsl : throw new InvalidOperationException("EnableSsl n'est pas configuré ou n'est pas un booléen valide.");
+        private static readonly string User = ConfigurationManager.AppSettings["SmtpUser"] ?? string.Empty;
+        private static readonly string Pass = ConfigurationManager.AppSettings["SmtpPass"] ?? string.Empty;
+        private static readonly string From = ConfigurationManager.AppSettings["FromAddress"] ?? throw new InvalidOperationException("FromAddress n'est pas configuré.");
 
         public static async Task SendAsync(string to, string subject, string bodyHtml, string imagePath = null)
         {

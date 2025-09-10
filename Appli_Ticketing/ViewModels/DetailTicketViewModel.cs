@@ -1,10 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using System;
 using System.ComponentModel;
-using System.Data.SqlClient;
 using System.Windows.Input;
 using Appli_Ticketing.Models;
-using Dapper;
+using Appli_Ticketing.Services;
 
 namespace Appli_Ticketing.ViewModels
 {
@@ -15,26 +13,29 @@ namespace Appli_Ticketing.ViewModels
         public ICommand SaveCommand { get; }
 
         private readonly Action _closeAction;
+        private readonly DatabaseService _db;
 
         public DetailTicketViewModel(Ticket ticket, Action closeAction)
         {
             Ticket = ticket;
             _closeAction = closeAction;
+            _db = new DatabaseService();
             SaveCommand = new RelayCommand(Save);
         }
 
         private void Save()
         {
-            using var conn = new SqlConnection(
-                "Data Source=PC-HUGO\\mssqlserver01;Initial Catalog=Appli_Ticketing;Integrated Security=True;Encrypt=False");
-            conn.Open();
+            if (Ticket == null)
+            {
+                System.Windows.MessageBox.Show("Aucun ticket sélectionné.");
+                return;
+            }
 
-            conn.Execute("UPDATE Tickets SET Title = @Title, Description = @Description, Type = @Type, Response = @Response WHERE Id = @Id", Ticket);
-
+            _db.UpdateTicket(Ticket);
             _closeAction?.Invoke();
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
         void OnPropertyChanged(string n) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(n));
     }
 }
