@@ -63,12 +63,15 @@ namespace Appli_Ticketing.ViewModels
                 return;
             }
 
-            var window = new Views.DetailTicket(SelectedTicket)
+            var window = new Views.DetailTicket(SelectedTicket);
+            if (Application.Current.MainWindow != window)
             {
-                Owner = Application.Current.MainWindow
-            };
+                window.Owner = Application.Current.MainWindow;
+            }
+
             window.ShowDialog();
         }
+
 
         private void DeleteTicket()
         {

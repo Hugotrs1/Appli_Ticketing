@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Assets\raptordesk.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +18,7 @@
     <None Remove="Assets\backgroundfull.jpg" />
     <None Remove="Assets\dino_roar.wav" />
 	  <None Remove="Assets\logo_app.png" />
+	  <None Remove="Assets\raptordesk.ico" />
 	  <None Remove="Fonts\RubikDistressed-Regular.ttf" />
   </ItemGroup>
 
@@ -33,6 +35,10 @@
     <Content Include="Assets\Alerte_Rouge.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\raptordesk.ico" />
+    <EmbeddedResource Include="Assets\raptordesk.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="Assets\Sounds\dino_roar.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

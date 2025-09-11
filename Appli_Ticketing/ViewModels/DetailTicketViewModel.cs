@@ -18,10 +18,14 @@ namespace Appli_Ticketing.ViewModels
         public DetailTicketViewModel(Ticket ticket, Action closeAction)
         {
             Ticket = ticket;
+            if (string.IsNullOrEmpty(Ticket.Type))
+                Ticket.Type = "Incident";
+
             _closeAction = closeAction;
             _db = new DatabaseService();
             SaveCommand = new RelayCommand(Save);
         }
+
 
         private void Save()
         {
@@ -31,9 +35,26 @@ namespace Appli_Ticketing.ViewModels
                 return;
             }
 
-            _db.UpdateTicket(Ticket);
-            _closeAction?.Invoke();
+            if (string.IsNullOrWhiteSpace(Ticket.Title) ||
+                string.IsNullOrWhiteSpace(Ticket.Description) ||
+                string.IsNullOrWhiteSpace(Ticket.Type) ||
+                string.IsNullOrWhiteSpace(Ticket.Status))
+            {
+                System.Windows.MessageBox.Show("Certains champs obligatoires sont vides (Titre, Description, Type, Status).");
+                return;
+            }
+
+            try
+            {
+                _db.UpdateTicket(Ticket);
+                _closeAction?.Invoke();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Erreur lors de la sauvegarde : " + ex.Message);
+            }
         }
+
 
         public event PropertyChangedEventHandler? PropertyChanged;
         void OnPropertyChanged(string n) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(n));

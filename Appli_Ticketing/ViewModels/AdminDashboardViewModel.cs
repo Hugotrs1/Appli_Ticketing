@@ -67,7 +67,10 @@ namespace Appli_Ticketing.ViewModels
             }
 
             var window = new Views.ReponseAdmin();
-            window.Owner = Application.Current.MainWindow;
+            if (Application.Current.MainWindow != window)
+            {
+                window.Owner = Application.Current.MainWindow;
+            }
 
             if (window.ShowDialog() == true && !string.IsNullOrWhiteSpace(window.ResponseText))
             {
@@ -79,6 +82,7 @@ namespace Appli_Ticketing.ViewModels
                 SelectedTicket = null;
             }
         }
+
 
         private void SetOnHold()
         {
@@ -131,16 +135,19 @@ namespace Appli_Ticketing.ViewModels
         {
             if (SelectedTicket == null)
             {
-                MessageBox.Show("Veuillez sélectionner un ticket pour voir les détails.");
+                MessageBox.Show("Aucun ticket sélectionné.");
                 return;
             }
 
-            var window = new Views.DetailTicket(SelectedTicket)
+            var window = new Views.DetailTicket(SelectedTicket);
+            if (Application.Current.MainWindow != window)
             {
-                Owner = Application.Current.MainWindow
-            };
+                window.Owner = Application.Current.MainWindow;
+            }
+
             window.ShowDialog();
         }
+
 
         private void Logout()
         {

@@ -51,13 +51,14 @@
                        FontFamily="{StaticResource Rubik Distressed}"/>
 
             <ComboBox SelectedValue="{Binding Ticket.Type, Mode=TwoWay}"
-                              SelectedValuePath="Content"
-                              Height="30"
-                              Width="340"
-                              Opacity="0.8">
+                      SelectedValuePath="Content"
+                      Height="30"
+                      Width="340"
+                      Opacity="0.8">    
                 <ComboBoxItem Content="Incident"/>
                 <ComboBoxItem Content="Demande"/>
             </ComboBox>
+
 
             <TextBlock Text="Réponse de l'Admin:" 
                        FontSize="17" 
