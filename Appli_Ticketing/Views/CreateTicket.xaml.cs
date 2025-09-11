@@ -135,13 +135,27 @@ namespace Appli_Ticketing.Views
                 imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets/Alerte_Max.png");
 
             MessageBox.Show("Ticket créé — l'email est en cours d'envoi.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+
             _ = Task.Run(async () =>
             {
                 if (File.Exists(imagePath))
                     await EmailService.SendAsync(adminEmail, sujet, corpsHtml, imagePath);
                 else
                     await EmailService.SendAsync(adminEmail, sujet, corpsHtml);
+
+                if (probleme.Criticite > 80)
+                {
+                    try
+                    {
+                        await TelegramService.SendMessage($"Ticket critique créé : {title} (Criticité {probleme.Criticite})");
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Windows.MessageBox.Show("Erreur envoi Telegram : " + ex.Message);
+                    }
+                }
             });
+
 
             this.Close();
         }
